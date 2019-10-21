@@ -30,12 +30,7 @@ public class ScoreUpdateEx_01 {
 		ScoreServiceV3 sc = new ScoreServiceV3();
 		ScoreDTO scoreDTO = null;
 
-		String strStNum = sc.inputStudent();
 		
-		if (strStNum == null) {
-			System.out.println("성적입력 종료");
-			return; // 프로젝트 종료
-		}
 		List<ScoreVO> scList = sc.updateStudent();
 		if(scList == null) {
 			System.out.println("성적입력 종료");
@@ -52,15 +47,7 @@ public class ScoreUpdateEx_01 {
 			System.out.println("성적입력 종료!");
 			return; // 프로젝트 종료
 		}
-
-		Integer intScore = sc.updateScore(scoreDTO);
-		if (intScore == null) {
-			System.out.println("성적입력 종료");
-			return; // 프로젝트 종료
-		}
-		
 		System.out.println(scoreVO.toString());
-		
 		
 		int ret = sc.updateScore(scoreVO);
 		if(ret > 0) {

@@ -112,7 +112,7 @@ public class ScoreServiceV3 {
 	 * Integer 클래스 형은 0~0까지 숫자형과 null을 사용가능
 	 */
 	public Integer inputScore() {
-	
+		
 		String strScore = null;
 		Integer intScore = null;
 		/*
