@@ -69,18 +69,18 @@
 			D_ADDR
 		)VALUES (
 			#{d_code},
-			#{d_name},
-			#{d_ceo},
-			#{d_tel},
-			#{d_add}
+			#{d_name,jdbcType=VARCHAR},
+			#{d_ceo,jdbcType=VARCHAR},
+			#{d_tel,jdbcType=VARCHAR},
+			#{d_add,jdbcType=VARCHAR}
 		)
 	</insert>
 	<update id="update" parameterType="DeptDTO">
 	UPDATE tbl_dept SET
-			D_NAME = #{d_name},
-			D_CEO = #{d_ceo},
-			D_TEL = #{d_tel},
-			D_ADDR = #{d_addr}
+			D_NAME = #{d_name,jdbcType=VARCHAR},
+			D_CEO = #{d_ceo,jdbcType=VARCHAR},
+			D_TEL = #{d_tel,jdbcType=VARCHAR},
+			D_ADDR = #{d_addr,jdbcType=VARCHAR}
 		WHERE D_CODE = #{d_code}
 	
 	
