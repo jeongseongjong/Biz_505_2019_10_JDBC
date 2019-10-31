@@ -1,6 +1,5 @@
 package com.biz.iolist.service;
 
-import java.util.List;
 import java.util.Scanner;
 
 import org.apache.ibatis.session.SqlSession;
@@ -10,7 +9,6 @@ import com.biz.iolist.dao.DeptDao;
 import com.biz.iolist.dao.IolistDao;
 import com.biz.iolist.dao.IolistViewDao;
 import com.biz.iolist.dao.ProductDao;
-import com.biz.iolist.persistence.IolistVO;
 
 public class IolistServiceV1 {
 
@@ -21,6 +19,8 @@ public class IolistServiceV1 {
 	protected DeptDao deptDao;
 	protected IolistViewDao viewDao;
 	
+	protected IolistViewServiceV1 ioView;
+	
 	public IolistServiceV1() {
 		
 		SqlSession sqlSession = DBConnection.getSqlSessionFactory().openSession(true);
@@ -30,12 +30,8 @@ public class IolistServiceV1 {
 		this.deptDao = sqlSession.getMapper(DeptDao.class);
 		this.viewDao = sqlSession.getMapper(IolistViewDao.class);
 			
-	}
-	public void viewAllList() {
+		ioView = new IolistViewServiceV1();
 		
-		List<IolistVO> iolist = viewDao.selectAll();
-		for(IolistVO vo : iolist) {
-			System.out.println(vo.toString());
-		}
 	}
+	
 }

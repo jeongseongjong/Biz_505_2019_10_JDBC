@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.biz.book.dao.RentBookDao">
+
+	<select id="selectAll" resultType="RentBookDTO">
+		SELECT
+			RENT_SEQ,
+			RENT_DATE,
+			RENT_RETURN_DATE,
+			RENT_BCODE,
+			RENT_UCODE,
+			RENT_RETURN_YN,
+			RENT_POINT
+		FROM tbl_rent_book
+	</select>
+	
+
+</mapper>

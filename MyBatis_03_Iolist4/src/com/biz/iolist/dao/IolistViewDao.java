@@ -9,7 +9,6 @@ public interface IolistViewDao {
 	public List<IolistVO> selectAll();
 	public IolistVO findById(long io_seq);
 	
-	
 	public List<IolistVO> findByDCode(String io_dcode);
 	public List<IolistVO> findByPCode(String io_pcode);
 	

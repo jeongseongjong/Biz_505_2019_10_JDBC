@@ -9,11 +9,97 @@
 	<select id="selectAll" resultType = "IolistVO">
 	SELECT * FROM view_iolist
 	</select>
-	<select id="findById" resultType = "IolistVO"></select>
-	<select id="findByDCode" resultType = "IolistVO"></select>
-	<select id="findByDName" resultType = "IolistVO"></select>
-	<select id="findByPCode" resultType = "IolistVO"></select>
-	<select id="findByPName" resultType = "IolistVO"></select>
+	<select id="findById" resultType = "IolistVO">
+	
+	</select>
+	<select id="findByDCode" resultType = "IolistVO">
+	SELECT
+		IO_SEQ
+		IO_DATE
+		IO_INOUT
+		IO_DCODE
+		D_NAME
+		D_CEO
+		D_TEL
+		D_ADDR
+		IO_PCODE
+		P_CODE
+		P_NAME
+		P_IPRICE
+		P_OPRICE
+		P_VAT
+		IO_QTY
+		IO_PRICE
+		IO_TOTAL
+	FROM view_iolist
+	WHERE IO_DCODE = #{io_dcode}
+	</select>
+	<select id="findByDName" resultType = "IolistVO">
+SELECT
+		IO_SEQ
+		IO_DATE
+		IO_INOUT
+		IO_DCODE
+		D_NAME
+		D_CEO
+		D_TEL
+		D_ADDR
+		IO_PCODE
+		P_CODE
+		P_NAME
+		P_IPRICE
+		P_OPRICE
+		P_VAT
+		IO_QTY
+		IO_PRICE
+		IO_TOTAL
+	FROM view_iolist
+	WHERE D_NAME = #{d_name}
+	</select>
+	<select id="findByPCode" resultType = "IolistVO">
+	SELECT
+		IO_SEQ
+		IO_DATE
+		IO_INOUT
+		IO_DCODE
+		D_NAME
+		D_CEO
+		D_TEL
+		D_ADDR
+		IO_PCODE
+		P_CODE
+		P_NAME
+		P_IPRICE
+		P_OPRICE
+		P_VAT
+		IO_QTY
+		IO_PRICE
+		IO_TOTAL
+	FROM view_iolist
+	WHERE P_CODE = #{p_code}
+	</select>
+	<select id="findByPName" resultType = "IolistVO">
+SELECT
+		IO_SEQ
+		IO_DATE
+		IO_INOUT
+		IO_DCODE
+		D_NAME
+		D_CEO
+		D_TEL
+		D_ADDR
+		IO_PCODE
+		P_CODE
+		P_NAME
+		P_IPRICE
+		P_OPRICE
+		P_VAT
+		IO_QTY
+		IO_PRICE
+		IO_TOTAL
+	FROM view_iolist
+	WHERE P_NAME = #{p_name}
+	</select>
 
 </mapper>
   
