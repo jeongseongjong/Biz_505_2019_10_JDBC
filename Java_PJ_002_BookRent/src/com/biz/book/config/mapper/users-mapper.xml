@@ -17,7 +17,7 @@
 	<select id="findByName" resultType="UsersDTO">
 	SELECT *
 	FROM tbl_users
-	WHERE U_NAME = #{u_name}
+	WHERE U_NAME LIKE '%' || #{u_name} || '%'
 	</select>
 	
 	<select id="findById" resultType="UsersDTO">
@@ -26,6 +26,16 @@
 	WHERE U_CODE = #{u_code}
 	</select>
 	
+	<select id="findByNameTel" resultType="UsersDTO">
+	SELECT
+			U_CODE,
+			U_NAME,
+			U_TEL,
+			U_ADDR
+		FROM tbl_users
+		WHERE u_name = #{u_name} AND u_tel = #{u_tel}
+		</select>
+	
 	<select id="findByTel" resultType="UsersDTO">
 	SELECT *
 	FROM tbl_users
@@ -33,15 +43,15 @@
 	</select>
 	<insert id="insert" parameterType="UsersDTO">
 	INSERT INTO tbl_users(
-			U_CODE
-			U_NAME
-			U_TEL
+			U_CODE,
+			U_NAME,
+			U_TEL,
 			U_ADDR
 	) VALUES (
-		CODE_USERS.NEXTVAL,
-			#{u_name},
-			#{u_tel},
-			#{u_addr}
+			#{u_code},
+			#{u_name,jdbcType=VARCHAR},
+			#{u_tel,jdbcType=VARCHAR},
+			#{u_addr,jdbcType=VARCHAR}
 	)
 	</insert>
 	<update id="update" parameterType="UsersDTO">

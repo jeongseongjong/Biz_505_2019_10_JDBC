@@ -5,6 +5,11 @@
   
   <mapper namespace="com.biz.book.dao.RentBookDao">
 
+	<select id="rentYN" resultType="RentBookDTO">
+	SELECT * 
+	FROM tbl_rent_book
+	WHERE rent_bcode = ? AND rent_return_yn IS null;
+	</select>
 	<select id="selectAll" resultType="RentBookDTO">
 		SELECT
 			RENT_SEQ,
@@ -16,6 +21,53 @@
 			RENT_POINT
 		FROM tbl_rent_book
 	</select>
+	<select id="findByBCode" resultType="RentBookDTO">
+	SELECT * 
+	FROM tbl_rent_book
+	WHERE rent_bcode = #{rent_bcode}
+	</select>
+	<select id="findByUCode" resultType="RentBookDTO">
+	SELECT * 
+	FROM tbl_rent_book
+	WHERE rent_ucode = #{rent_ucode}
+	</select>
+	
+	<insert id="insert" parameterType="RentBookDTO">
+	INSERT INTO tbl_rent_book(
+			RENT_SEQ,
+			RENT_DATE,
+			RENT_RETURN_DATE,
+			RENT_BCODE,
+			RENT_UCODE,
+			RENT_RETURN_YN,
+			RENT_POINT
+		)VALUES(
+			#{rent_seq},
+			#{rent_date},
+			#{rent_return_date},
+			#{rent_bcode},
+			#{rent_ucode},
+			#{rent_return_yn},
+			#{rent_point}
+		)
+	</insert>
+	<update id="update" parameterType="RentBookDTO">
+	UPDATE tbl_rent_book SET
+			RENT_DATE = {rent_date},
+			RENT_RETURN_DATE = {rent_return_date},
+			RENT_BCODE = {rent_bcode},
+			RENT_UCODE = {rent_ucode},
+			RENT_RETURN_YN = {rent_return_yn},
+			RENT_POINT = {rent_point}
+	WHERE RENT_SEQ = #{rent_seq}
+	</update>
+	<delete id="delete" parameterType="RentBookDTO">
+	DELETE FROM tbl_delete
+	WHERE RENT_SEQ = #{rent_seq}
+	
+	</delete>
+	
+	
 	
 
 </mapper>

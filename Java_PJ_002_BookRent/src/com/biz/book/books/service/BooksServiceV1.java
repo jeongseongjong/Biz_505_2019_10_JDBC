@@ -72,9 +72,7 @@ public class BooksServiceV1 {
 	protected BooksDTO viewBDetail(String strBCode) {
 		BooksDTO booksDTO = bDao.findById(strBCode);
 		
-		System.out.println("1");
 		if(booksDTO == null) return null;
-		System.out.println("2");
 		
 		System.out.println("====================================");
 		System.out.printf("도서코드 : %s\n", booksDTO.getB_code());

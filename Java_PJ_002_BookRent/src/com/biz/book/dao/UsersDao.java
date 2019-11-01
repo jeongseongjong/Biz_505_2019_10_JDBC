@@ -2,6 +2,8 @@ package com.biz.book.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.biz.book.persistence.UsersDTO;
 
 public interface UsersDao {
@@ -19,5 +21,9 @@ public interface UsersDao {
 
 	public int delete(String u_code);
 	public String getMaxUCode();
+	
+	public List<UsersDTO> findByNameTel(
+			@Param("u_name") String u_name,
+			@Param("u_tel") String u_tel);
 
 }

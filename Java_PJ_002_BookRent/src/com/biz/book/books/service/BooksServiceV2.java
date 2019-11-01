@@ -32,16 +32,9 @@ public class BooksServiceV2 extends BooksServiceV1 {
 			;
 	}
 
-	@SuppressWarnings("null")
 	public void insertBName() {
-		System.out.println("======================================");
-		String strBCode;
-		String strBName;
-		String strBAuth = null;
-		String strBComp = null;
-		String strBYear = null;
-		String strIPrice = null ;
-		String strRPrice = null;
+		System.out.println("=========================================");
+		String strBCode ;
 		while (true) {
 
 			System.out.print("상품코드(Enter : 자동생성, Q:quit) >> ");
@@ -60,10 +53,11 @@ public class BooksServiceV2 extends BooksServiceV1 {
 				System.out.println("생성된 코드 : " + strBCode);
 				System.out.println("사용하시겠습니까 ?(Enter:Yes)");
 				String strYesNo = scan.nextLine();
-				if (strYesNo.trim().isEmpty())
+				if (strYesNo.trim().isEmpty()) {
 					break;
-				else
+				} else {
 					continue;
+				}
 			}
 			if (strBCode.length() != 6) {
 				System.out.println("코드길이가 맞지 않다.");
@@ -88,15 +82,14 @@ public class BooksServiceV2 extends BooksServiceV1 {
 
 			break;
 
-		} // Pcode 입력끝
-
-		if (strBCode.equals("0"))
+		}// Pcode 입력끝
+		if(strBCode.equals("0"))
 			return;
 
 		System.out.println("=================================");
 		while (true) {
 			System.out.print("도서명 >> ");
-			strBName = scan.nextLine();
+			String strBName = scan.nextLine();
 			if (strBName.equals("0"))
 				break;
 
@@ -112,76 +105,63 @@ public class BooksServiceV2 extends BooksServiceV1 {
 				System.out.println("도서명 중복");
 				System.out.print("다시입력하라(Enter) >>");
 				String yesNo = scan.nextLine();
-				if (yesNo.trim().isEmpty())
+				if (yesNo.trim().isEmpty()) {
 					break;
-
-				continue;
+				} else {
+					continue;
+				}
 
 			}
 
 			while (true) {
-				System.out.print("등록할 저자 >>");
+				System.out.println("등록할 저자 >> ");
 				String strAuth = scan.nextLine();
-				if (strAuth.equals("0"))
-					break;
-
 				if (strAuth.trim().isEmpty()) {
-					this.viewAllList();
-					System.out.println("저자을 입력하라");
+					System.out.println("회원전화번호를 입력하라");
 					continue;
 				}
-				List<BooksDTO> booksList = bDao.findByAuther(strAuth);
-				if (booksList.size() > 0) {
-					System.out.println("저자 중복");
-					System.out.print("다시입력하라(Enter) >>");
-					String yesNo = scan.nextLine();
-					if (yesNo.trim().isEmpty())
-						break;
+				System.out.println("등록할 출판사 >> ");
+				String strComp = scan.nextLine();
+				if (strComp.trim().isEmpty()) {
+					System.out.println("회원전화번호를 입력하라");
 					continue;
-
 				}
-				break;
-			}
-			while (true) {
-				System.out.print("발행연도 >>");
+				System.out.println("등록할 출판연도 >> ");
 				String strYear = scan.nextLine();
-				if (strYear.equals("0"))
-					break;
-
 				if (strYear.trim().isEmpty()) {
-					this.viewAllList();
-					System.out.println("발행년도를 입력하라");
+					System.out.println("회원전화번호를 입력하라");
 					continue;
+				}
+				System.out.println("등록할 가격 >> ");
+				String strPrice = scan.nextLine();
+				if (strPrice.trim().isEmpty()) {
+					System.out.println("회원전화번호를 입력하라");
+					continue;
+				}
+				System.out.println("등록할 대여가격 >> ");
+				String strRPrice = scan.nextLine();
+				if (strRPrice.trim().isEmpty()) {
+					System.out.println("회원전화번호를 입력하라");
+					continue;
+				}
+				BooksDTO booksDTO = BooksDTO.builder()
+						.b_code(strBCode)
+						.b_name(strBName)
+						.b_auther(strAuth)
+						.b_comp(strComp)
+						.b_year(Integer.valueOf(strYear))
+						.b_iprice(Integer.valueOf(strPrice))
+						.b_rprice(Integer.valueOf(strRPrice))
+						.build();
+				
+				int ret = bDao.insert(booksDTO);
+				if(ret > 0) {
+					System.out.println("등록 성공");
+				}else {
+					System.out.println("등록 실패");
 				}
 				break;
 			}
-			while (true) {
-				System.out.print("대여가격 >>");
-				String strRprice = scan.nextLine();
-				if (strRprice.equals("0"))
-					break;
-
-				if (strRprice.trim().isEmpty()) {
-					this.viewAllList();
-					System.out.println("대여가격을 입력하라");
-					
-					continue;
-					
-				}break;
-				
-//				BooksDTO booksDTO = new BooksDTO();
-//				booksDTO.setB_code(strBCode);
-//				booksDTO.setB_name(strBName);
-//				booksDTO.setB_auther(strBAuth);
-//				booksDTO.setB_year(Integer.valueOf(strBYear));
-//				booksDTO.setB_rprice(Integer.valueOf(strRPrice));
-//				int ret = bDao.insert(booksDTO);
-//				if (ret > 0)
-//					System.out.println("입력성공");
-//				else
-//					System.out.println("입력실패");
-			}
-			break;
 		}
 
 	}
