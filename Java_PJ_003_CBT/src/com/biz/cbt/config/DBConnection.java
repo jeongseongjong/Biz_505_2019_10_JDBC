@@ -1,4 +1,4 @@
-package com.biz.iolist.config;
+package com.biz.cbt.config;
 
 import java.io.InputStream;
 
@@ -7,11 +7,11 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class DBConnection {
-
+	
 	private static SqlSessionFactory sqlSessionFactory;
 
 	static {
-		String configFile = "com/biz/iolist/config/myBatis.config.xml";
+		String configFile = "com/biz/cbt/config/cbt.config.xml";
 		InputStream inputStream = null;
 
 		try {
@@ -21,7 +21,6 @@ public class DBConnection {
 			if (sqlSessionFactory == null) {
 				sqlSessionFactory = builder.build(inputStream);
 			}
-			
 
 		} catch (Exception e) {
 			// TODO: handle exception

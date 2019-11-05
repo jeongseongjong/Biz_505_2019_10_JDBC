@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.biz.cbt.dao.CbtDao">
+
+	<select id="getMaxNum" resultType="String">
+		SELECT MAX(cb_num) FROM
+		tbl_cbt
+	</select>
+
+	<select id="selectAll" resultType="CbtDTO">
+		SELECT * FROM tbl_cbt
+
+	</select>
+	<select id="findByPlo" resultType="CbtDTO">
+		SELECT *
+		FROM tbl_cbt
+		WHERE
+		CB_NUM = #{cb_num}
+
+	</select>
+	<insert id="insert" parameterType="CbtDTO">
+		CB_NUM,
+		CB_PLO,
+		CB_EX1,
+		CB_EX2,
+		CB_EX3,
+		CB_EX4,
+		CB_ANSWER,
+		CB_YES,
+		CB_NO,
+		CB_RIGHT,
+		CB_WRONG
+		)VALUES (
+		#{cb_num},
+		#{cb_plo},
+		#{cb_ex1},
+		#{cb_ex2},
+		#{cb_ex3},
+		#{cb_ex4},
+		#{cb_answer},
+		#{cb_yes},
+		#{cb_no},
+		#{cb_right},
+		#{cb_wrong}
+		)
+	</insert>
+
+	<update id="update" parameterType="CbtDTO">
+		UPDATE tbl_cbt SET
+		CB_NUM =
+		#{c_num},
+		CB_PLO = #{cb_plo},
+		CB_EX1 = #{cb_ex1},
+		CB_EX2 = #{cb_ex2},
+		CB_EX3 = #{cb_ex3},
+		CB_EX4 = #{cb_ex4},
+		CB_ANSWER= #{cb_answer},
+		CB_YES =
+		#{cb_yes},
+		CB_NO = #{cb_no},
+		CB_RIGHT = #{cb_right},
+		CB_WRONG =
+		#{cb_wrong}
+		WHERE CB_NUM = #{cb_num}
+
+
+	</update>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
