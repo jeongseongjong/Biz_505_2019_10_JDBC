@@ -5,6 +5,10 @@
 
 <mapper namespace="com.biz.cbt.dao.CbtDao">
 
+	<resultMap type="CbtVO" id="masterDetail">
+	<id column = "cb_seq" property="cb_seq"/>
+	<result column="cb_plo" property="cb_plo"/>
+
 	<select id="getMaxNum" resultType="String">
 		SELECT MAX(cb_num) FROM
 		tbl_cbt
