@@ -1,6 +1,7 @@
 package com.biz.cbt.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,7 +17,10 @@ public class CbtService {
 	public CbtService() {
 
 		scan = new Scanner(System.in);
-		this.cDao = DBConnection.getSqlSessionFactory().openSession(true).getMapper(CbtDao.class);
+		this.cDao = DBConnection
+				.getSqlSessionFactory()
+				.openSession(true)
+				.getMapper(CbtDao.class);
 	}
 
 	public void ploblemMenu() {
@@ -32,7 +36,7 @@ public class CbtService {
 			if (intMenu == 1) {
 				this.write();
 			} else if (intMenu == 2) {
-				this.solve();
+				this.quiz();
 			} else {
 				System.out.println("메뉴를 입력하시오");
 				continue;
@@ -74,96 +78,79 @@ public class CbtService {
 		String strEx3;
 		String strEx4;
 		String strAns;
-		String strNum;
-		while(true) {
-			System.out.println("등록할 코드");
-			strNum = scan.nextLine();
-			if(strNum.trim().isEmpty()) {
-				String strTMPNum = cDao.getMaxNum();
-				int intNum = Integer.valueOf(strTMPNum.substring(0));
-				intNum++;
-				strNum = strTMPNum.substring(0);
-				
-				System.out.println("생성된 넘버 : " + strNum);
-				System.out.println("사용할 거냐 ?");
-				String strYN = scan.nextLine();
-				if(strYN.trim().isEmpty()) {
-					break;
-				}else {
-					continue;
-				}
-			}
-			CbtDTO cbtDTO = new CbtDTO();
-			cbtDTO.setCbt_code(strNum);
-			break;
-		}
+		CbtDTO cbtDTO = new CbtDTO();
 		while (true) {
 			System.out.println("등록할 문제 (종료 : 0) >> ");
 			strPlo = scan.nextLine();
 			if (strPlo.equals("0"))
 				break;
-
-			CbtDTO cList = cDao.findByPlo(strPlo);
-			System.out.println("문제등록 완료");
-			
-			CbtDTO cbtDTO = new CbtDTO();
-			cbtDTO.setCbt_plo(strPlo);
+			cbtDTO.setCb_plo(strPlo);
 			break;
 			
 		}
 		while (true) {
 			System.out.print("등록할 보기1번 >> ");
 			strEx1 = scan.nextLine();
-			CbtDTO cList = cDao.findByPlo(strEx1);
-			System.out.println("보기1번 등록 완료");
-			
-			CbtDTO cbtDTO = new CbtDTO();
-			cbtDTO.setCbt_ex1(strEx1);
+			if(!strEx1.trim().isEmpty()) {
+				System.out.println("보기1번 등록 완료");	
+			}
+			cbtDTO.setCb_ex1(strEx1);
 			break;
 		}
 		while (true) {
 			System.out.print("등록할 보기2번 >> ");
 			strEx2 = scan.nextLine();
-			CbtDTO cList = cDao.findByPlo(strEx2);
-			
-			CbtDTO cbtDTO = new CbtDTO();
-			cbtDTO.setCbt_ex2(strEx2);
+			if(!strEx2.trim().isEmpty()) {
+				System.out.println("보기2번 등록 완료");	
+			}
+			cbtDTO.setCb_ex2(strEx2);
 			break;
 		}
 		while (true) {
 			System.out.print("등록할 보기3번 >> ");
 			strEx3 = scan.nextLine();
-			CbtDTO cList = cDao.findByPlo(strEx3);
-			
-			CbtDTO cbtDTO = new CbtDTO();
-			cbtDTO.setCbt_ex3(strEx3);
+			if(!strEx3.trim().isEmpty()) {
+				System.out.println("보기3번 등록 완료");	
+			}
+			cbtDTO.setCb_ex3(strEx3);
 			break;
 		}
 		while (true) {
 			System.out.print("등록할 보기4번 >> ");
 			strEx4 = scan.nextLine();
-			CbtDTO cList = cDao.findByPlo(strEx4);
-			
-			CbtDTO cbtDTO = new CbtDTO();
-			cbtDTO.setCbt_ex4(strEx4);
+			if(!strEx4.trim().isEmpty()) {
+				System.out.println("보기4번 등록 완료");	
+			}
+			cbtDTO.setCb_ex4(strEx4);
 			break;
 		}
 		while (true) {
 			System.out.print("등록할 답 >> ");
 			strAns = scan.nextLine();
-			CbtDTO cList = cDao.findByPlo(strAns);
-			
-			CbtDTO cbtDTO = new CbtDTO();
-			cbtDTO.setCbt_answer(Integer.valueOf(strAns));
+			int intanswer = 0;
+			try {
+				intanswer = Integer.valueOf(strAns);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			if(intanswer==1) {
+				cbtDTO.setCb_answer(cbtDTO.getCb_ex1());
+			}else if(intanswer==2){
+				cbtDTO.setCb_answer(cbtDTO.getCb_ex2());
+			}else if(intanswer==3) {
+				cbtDTO.setCb_answer(cbtDTO.getCb_ex3());
+			}else if(intanswer==4) {
+				cbtDTO.setCb_answer(cbtDTO.getCb_ex4());
+			}else {
+				System.out.println("다시 등록해주세요");
+				continue;
+			}
 			break;
 		}
 		
-		CbtDTO cbtDTO = new CbtDTO();
+		
 		List<CbtDTO> cList = new ArrayList<CbtDTO>();
 		cList.add(cbtDTO);
-		
-		System.out.println("등록완료");
-		System.out.println(cDao.selectAll());
 		
 		int ret = cDao.insert(cbtDTO);
 		if(ret > 0) {
@@ -171,40 +158,72 @@ public class CbtService {
 		}else {
 			System.out.println("등록 실패");
 		}
-
+		return;
 	}
 
 	public void update() {
-
-		System.out.println("===============================");
-		System.out.print("수정할 문제 >>");
-		String strPlo = scan.nextLine();
-		if (strPlo.trim().isEmpty()) {
-			this.selectAll();
-		}
-
-		CbtDTO cbtDTO = cDao.findByPlo(strPlo);
+		int intAns = 0;
+		CbtDTO cbtDTO = new CbtDTO();
+		String strEx1 = "";
+		String strEx2 = "";
+		String strEx3 = "";
+		String strEx4 = "";
 		while (true) {
+		System.out.println("===============================");
+		System.out.print("수정할 문제 번호 >>");
+		String strSeq = scan.nextLine();
+		cbtDTO = cDao.findById(Long.valueOf(strSeq));
+		if(!strSeq.trim().isEmpty()) {
+			cbtDTO.setCb_seq(Long.valueOf(strSeq));
+		}
+		System.out.println("수정할 문제 >>");
+		String strPlo = scan.nextLine();
+		if(!strPlo.trim().isEmpty()) {
+			cbtDTO.setCb_plo(strPlo);
+		}
 			System.out.print("수정할 보기1 >> ");
-			String strEx1 = scan.nextLine();
+			strEx1 = scan.nextLine();
 			if (!strEx1.trim().isEmpty()) {
-				cbtDTO.setCbt_ex1(strEx1);
+				cbtDTO.setCb_ex1(strEx1);
 			}
 			System.out.print("수정할 보기2 >> ");
-			String strEx2 = scan.nextLine();
+			strEx2 = scan.nextLine();
 			if (!strEx2.trim().isEmpty()) {
-				cbtDTO.setCbt_ex1(strEx2);
+				cbtDTO.setCb_ex2(strEx2);
 			}
 			System.out.print("수정할 보기3 >> ");
-			String strEx3 = scan.nextLine();
+			strEx3 = scan.nextLine();
 			if (!strEx3.trim().isEmpty()) {
-				cbtDTO.setCbt_ex1(strEx3);
+				cbtDTO.setCb_ex3(strEx3);
 			}
 			System.out.print("수정할 보기4 >> ");
-			String strEx4 = scan.nextLine();
+			strEx4 = scan.nextLine();
 			if (!strEx4.trim().isEmpty()) {
-				cbtDTO.setCbt_ex1(strEx4);
+				cbtDTO.setCb_ex4(strEx4);
 			}
+			System.out.print("수정할 답 >> ");
+			String strAns = scan.nextLine();
+			try {
+				intAns = Integer.valueOf(strAns);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			if (intAns == 1) {
+				cbtDTO.setCb_answer(strEx1);
+			}else if (intAns == 2){
+				cbtDTO.setCb_answer(strEx2);
+			}else if (intAns == 3) {
+				cbtDTO.setCb_answer(strEx3);
+			}else if (intAns == 4) {
+				cbtDTO.setCb_answer(strEx4);
+			}else {
+				System.out.println("11");
+				break;
+			}
+			
+			List<CbtDTO> cList = new ArrayList<CbtDTO>();
+			cList.add(cbtDTO);
+			
 			int ret = cDao.update(cbtDTO);
 			if(ret > 0) {
 				System.out.println("수정완료");
@@ -212,14 +231,16 @@ public class CbtService {
 				System.out.println("수정실패");
 			}
 			
-			System.out.println(cDao.findByPlo(strPlo).toString());
 		}
 		
 
 	}
 
-	private void solve() {
-		// TODO Auto-generated method stub
+	public void quiz() {
+		
+		List<CbtDTO> cList = cDao.selectAll();
+		this.title(cList);
+			
 		
 	}
 	
@@ -235,7 +256,7 @@ public class CbtService {
 		if (cList == null) {
 			System.out.println("리스트 없음");
 		} else {
-			this.title(cList);
+			this.cDao.selectAll();
 		}
 
 	}
@@ -255,24 +276,23 @@ public class CbtService {
 
 	public void body(CbtDTO cbtDTO) {
 
-		System.out.println(cbtDTO.getCbt_code() + "\t");
-		System.out.println(cbtDTO.getCbt_plo() + "\t");
-		System.out.println(cbtDTO.getCbt_ex1() + "\t");
-		System.out.println(cbtDTO.getCbt_ex2() + "\t");
-		System.out.println(cbtDTO.getCbt_ex3() + "\t");
-		System.out.println(cbtDTO.getCbt_ex4() + "\t");
-
+		System.out.print(cbtDTO.getCb_seq() + ". ");
+		System.out.println(cbtDTO.getCb_plo() + "\t");
+		System.out.println("1). " + cbtDTO.getCb_ex1() + "\t");
+		System.out.println("2). " + cbtDTO.getCb_ex2() + "\t");
+		System.out.println("3). " + cbtDTO.getCb_ex3() + "\t");
+		System.out.println("4). " + cbtDTO.getCb_ex4() + "\n");
+		
 	}
 
-	public void cbtDetail(String strNum) {
-		CbtDTO cbtDTO = cDao.findByPlo(strNum);
-		if (cbtDTO == null)
+	public void answer(long strSeq) {
+		CbtDTO cbtDTO = cDao.findById(strSeq);
 
-			System.out.printf("답 : %d ", cbtDTO.getCbt_answer() + "\n");
-		System.out.printf("맞은 문제 : %s", cbtDTO.getCbt_yes() + "\n");
-		System.out.printf("틀린 문제 : %s", cbtDTO.getCbt_no() + "\n");
-		System.out.printf("맞은 개수  : %d", cbtDTO.getCbt_right() + "\t");
-		System.out.printf("틀린 개수 : %d", cbtDTO.getCbt_wrong() + "\t");
+		System.out.printf("답 : %d ", cbtDTO.getCb_answer() + "\n");
+		System.out.printf("맞은 문제 : %s", cbtDTO.getCb_Oplo() + "\n");
+		System.out.printf("틀린 문제 : %s", cbtDTO.getCb_Xplo() + "\n");
+		System.out.printf("맞은 개수  : %d", cbtDTO.getCb_Ocount() + "\t");
+		System.out.printf("틀린 개수 : %d", cbtDTO.getCb_Xcount() + "\t");
 
 	}
 

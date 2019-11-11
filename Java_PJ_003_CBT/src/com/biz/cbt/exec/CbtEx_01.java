@@ -8,5 +8,6 @@ public class CbtEx_01 {
 		
 		CbtService cs = new CbtService();
 		cs.ploblemMenu();
+		
 	}
 }
